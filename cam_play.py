@@ -17,6 +17,21 @@ class Play_Cam(QMainWindow):
         self.btn_show_cam.move(0, 0)
         self.btn_show_cam.clicked.connect(self.btn_choice_model_cam)
 
+        self.lable_stream = QLabel("enter Stream number", self)
+        self.lable_stream.move(0, 175)
+
+        self.input_stream_number = QLineEdit("", self)
+        self.input_stream_number.move(0, 200)
+        self.input_stream_number.resize(100, 20)
+
+    def hide_dynacolor_stream(self):
+        self.lable_stream.hide()
+        self.input_stream_number.hide()
+
+    def show_cams_stream(self):
+        self.lable_stream.show()
+        self.input_stream_number.show()
+
     def ip_add_cum_find(self, ip_address):
         try:
             ipaddress.ip_network(ip_address)
@@ -33,18 +48,21 @@ class Play_Cam(QMainWindow):
         camera, btn_clk_OK = QInputDialog.getItem(self, "Cameras_title", "Enter cam", list_the_cam)
         if camera == "Sunell" and btn_clk_OK == True:
             self.lable_enter_cam.setText("Sunell")
+            self.show_cams_stream()
             if self.ip_add_cum_find(ip_address_fnd) == True:
                 self.play_cam_sta_sunell()
             else:
                 self.infobox()
         elif camera == "UNV" and btn_clk_OK ==True:
             self.lable_enter_cam.setText("UNV")
+            self.show_cams_stream()
             if self.ip_add_cum_find(ip_address_fnd) == True:
                 self.play_cam_sta_unv()
             else:
                 self.infobox()
         elif camera == "Dynacolor" and btn_clk_OK == True:
             self.lable_enter_cam.setText("Dynacolor")
+            self.hide_dynacolor_stream()
             if self.ip_add_cum_find(ip_address_fnd) == True:
                 self.play_cam_sta_dynacolor()
             else:
@@ -67,10 +85,6 @@ class Play_Cam(QMainWindow):
         self.input_pass.resize(100, 20)
         self.input_pass.setText("1234")
 
-        self.input_stream_number = QLineEdit("", self)
-        self.input_stream_number.move(0, 200)
-        self.input_stream_number.resize(100, 20)
-
     def all_lable(self):
 
         self.lable_enter_cam = QLabel("your enter cam", self)
@@ -85,8 +99,6 @@ class Play_Cam(QMainWindow):
         self.lable_pass = QLabel("enter password cam", self)
         self.lable_pass.move(0, 135)
 
-        self.lable_stream = QLabel("enter Stream number", self)
-        self.lable_stream.move(0, 175)
 
     def all_btn_in_window(self):
 
