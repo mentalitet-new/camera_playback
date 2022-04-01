@@ -13,17 +13,6 @@ class Play_Cam(QMainWindow):
         self.all_lable()
         self.all_input()
 
-        self.btn_show_cam = QPushButton("Choice model cam", self)
-        self.btn_show_cam.move(0, 0)
-        self.btn_show_cam.clicked.connect(self.btn_choice_model_cam)
-
-        self.lable_stream = QLabel("enter Stream number", self)
-        self.lable_stream.move(0, 175)
-
-        self.input_stream_number = QLineEdit("", self)
-        self.input_stream_number.move(0, 200)
-        self.input_stream_number.resize(100, 20)
-
     def hide_dynacolor_stream(self):
         self.lable_stream.hide()
         self.input_stream_number.hide()
@@ -40,7 +29,10 @@ class Play_Cam(QMainWindow):
             return False
 
     def infobox(self):
-        QMessageBox.warning(self, "Error value IP", " Enter Ip address correct")
+        QMessageBox.warning(self, "Error value IP", " Enter Ip correct address")
+
+    def infobox_number_stream(self):
+        QMessageBox.critical(self, "info", "incorrect stream number")
 
     def btn_choice_model_cam(self):
         ip_address_fnd = self.input_ip.text()
@@ -49,11 +41,20 @@ class Play_Cam(QMainWindow):
         if camera == "Sunell" and btn_clk_OK == True:
             self.lable_enter_cam.setText("Sunell")
             self.show_cams_stream()
-            if self.ip_add_cum_find(ip_address_fnd) == True:
-                self.play_cam_sta_sunell()
-            else:
-                self.infobox()
-        elif camera == "UNV" and btn_clk_OK ==True:
+            check_state = True
+            param_stream_cam = self.input_stream_number.text()
+            while check_state:
+                if self.ip_add_cum_find(ip_address_fnd) != True:
+                    self.infobox()
+                    break
+                elif param_stream_cam == "1" or param_stream_cam == "2":
+                    self.play_cam_sta_sunell()
+                    break
+                else:
+                    self.infobox_number_stream()
+                    break
+
+        elif camera == "UNV" and btn_clk_OK == True:
             self.lable_enter_cam.setText("UNV")
             self.show_cams_stream()
             if self.ip_add_cum_find(ip_address_fnd) == True:
@@ -85,6 +86,10 @@ class Play_Cam(QMainWindow):
         self.input_pass.resize(100, 20)
         self.input_pass.setText("1234")
 
+        self.input_stream_number = QLineEdit("", self)
+        self.input_stream_number.move(0, 200)
+        self.input_stream_number.resize(100, 20)
+
     def all_lable(self):
 
         self.lable_enter_cam = QLabel("your enter cam", self)
@@ -99,8 +104,14 @@ class Play_Cam(QMainWindow):
         self.lable_pass = QLabel("enter password cam", self)
         self.lable_pass.move(0, 135)
 
+        self.lable_stream = QLabel("enter Stream number", self)
+        self.lable_stream.move(0, 175)
 
     def all_btn_in_window(self):
+
+        self.btn_show_cam = QPushButton("Choice model cam", self)
+        self.btn_show_cam.move(0, 0)
+        self.btn_show_cam.clicked.connect(self.btn_choice_model_cam)
 
         self.button_play_cum_exit = QPushButton("Close Cam", self)
         self.button_play_cum_exit.move(100, 0)
