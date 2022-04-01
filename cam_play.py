@@ -1,6 +1,7 @@
 import sys
 import cv2 as cv
 from PyQt5.QtWidgets import *
+import ipaddress
 
 class Play_Cam(QMainWindow):
     def __init__(self):
@@ -16,25 +17,42 @@ class Play_Cam(QMainWindow):
         self.btn_show_cam.move(0, 0)
         self.btn_show_cam.clicked.connect(self.btn_choice_model_cam)
 
+    def ip_add_cum_find(self, ip_address):
+        try:
+            ipaddress.ip_network(ip_address)
+            return True
+        except ValueError:
+            return False
+
     def btn_choice_model_cam(self):
-        list_the_cam = ["Sunell", "UNV", "Dunacolor"]
+        ip_address_fnd = self.input_ip.text()
+        list_the_cam = ["Sunell", "UNV", "Dynacolor"]
         camera, btn_clk_OK = QInputDialog.getItem(self, "Cameras_title", "Enter cam", list_the_cam)
         if camera == "Sunell" and btn_clk_OK == True:
             self.lable_enter_cam.setText("Sunell")
-            self.play_cam_sta_sunell()
+            if self.ip_add_cum_find(ip_address_fnd) == True:
+                self.play_cam_sta_sunell()
+            else:
+                QMessageBox.warning(self, "Error value IP", " Enter Ip address correct")
         elif camera == "UNV" and btn_clk_OK ==True:
             self.lable_enter_cam.setText("UNV")
-            self.play_cam_sta_unv()
-        elif camera == "Dunacolor" and btn_clk_OK == True:
-            self.lable_enter_cam.setText("Dunacolor")
-            self.play_cam_sta_dunacolor()
+            if self.ip_add_cum_find(ip_address_fnd) == True:
+                self.play_cam_sta_unv()
+            else:
+                QMessageBox.warning(self, "Error value IP", " Enter Ip address correct")
+        elif camera == "Dynacolor" and btn_clk_OK == True:
+            self.lable_enter_cam.setText("Dynacolor")
+            if self.ip_add_cum_find(ip_address_fnd) == True:
+                self.play_cam_sta_dynacolor()
+            else:
+                QMessageBox.warning(self, "Error value IP", " Enter Ip address correct")
 
     def all_input(self):
 
         self.input_ip = QLineEdit("", self)
         self.input_ip.move(0, 80)
         self.input_ip.resize(140, 20)
-        self.input_ip.setText("192.168.")
+        self.input_ip.setPlaceholderText("000.000.000.000")
 
         self.input_login = QLineEdit("", self)
         self.input_login.move(0, 120)
@@ -53,7 +71,7 @@ class Play_Cam(QMainWindow):
     def all_lable(self):
 
         self.lable_enter_cam = QLabel("your enter cam", self)
-        self.lable_enter_cam.move(320, 0)
+        self.lable_enter_cam.move(0, 30)
 
         self.lable_ip = QLabel("enter IP cam", self)
         self.lable_ip.move(0, 55)
@@ -77,6 +95,7 @@ class Play_Cam(QMainWindow):
         res = QMessageBox.question(self, " Exit ", " Close cam ? ")
         if res == QMessageBox.Yes:
             self.ret_key_q = 113
+            self.input_stream_number.setText("")
         elif res == QMessageBox.No:
             QMessageBox.information(self, " info", " Continue")
 
@@ -116,7 +135,7 @@ class Play_Cam(QMainWindow):
         cap.release()
         cv.destroyAllWindows()
 
-    def play_cam_sta_dunacolor(self):
+    def play_cam_sta_dynacolor(self):
         self.ret_key_q = 0
         cap = cv.VideoCapture(f"rtsp://{self.input_login.text()}:{self.input_pass.text()}@{self.input_ip.text()}"
                               f":554/h264")
