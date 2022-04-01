@@ -53,7 +53,6 @@ class Play_Cam(QMainWindow):
                 else:
                     self.infobox_number_stream()
                     break
-
         elif camera == "UNV" and btn_clk_OK == True:
             self.lable_enter_cam.setText("UNV")
             self.show_cams_stream()
