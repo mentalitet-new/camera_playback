@@ -24,6 +24,9 @@ class Play_Cam(QMainWindow):
         except ValueError:
             return False
 
+    def infobox(self):
+        QMessageBox.warning(self, "Error value IP", " Enter Ip address correct")
+
     def btn_choice_model_cam(self):
         ip_address_fnd = self.input_ip.text()
         list_the_cam = ["Sunell", "UNV", "Dynacolor"]
@@ -33,19 +36,19 @@ class Play_Cam(QMainWindow):
             if self.ip_add_cum_find(ip_address_fnd) == True:
                 self.play_cam_sta_sunell()
             else:
-                QMessageBox.warning(self, "Error value IP", " Enter Ip address correct")
+                self.infobox()
         elif camera == "UNV" and btn_clk_OK ==True:
             self.lable_enter_cam.setText("UNV")
             if self.ip_add_cum_find(ip_address_fnd) == True:
                 self.play_cam_sta_unv()
             else:
-                QMessageBox.warning(self, "Error value IP", " Enter Ip address correct")
+                self.infobox()
         elif camera == "Dynacolor" and btn_clk_OK == True:
             self.lable_enter_cam.setText("Dynacolor")
             if self.ip_add_cum_find(ip_address_fnd) == True:
                 self.play_cam_sta_dynacolor()
             else:
-                QMessageBox.warning(self, "Error value IP", " Enter Ip address correct")
+                self.infobox()
 
     def all_input(self):
 
