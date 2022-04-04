@@ -5,7 +5,7 @@ import ipaddress
 import webbrowser
 import os
 
-class Play_Cam(QMainWindow):
+class Play_Camera(QMainWindow):
     def __init__(self):
         super().__init__()
         self.resize(400, 400)
@@ -223,7 +223,7 @@ class Play_Cam(QMainWindow):
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)  # creat application
-    dlgMain = Play_Cam()  # create main window
+    dlgMain = Play_Camera()  # create main window
     dlgMain.show()  # show window
     sys.exit(app.exec_())
 
