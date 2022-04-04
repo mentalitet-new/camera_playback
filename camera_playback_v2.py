@@ -2,7 +2,7 @@ import sys
 import cv2 as cv
 from PyQt5.QtWidgets import *
 import ipaddress
-import os
+import webbrowser
 
 class Play_Cam(QMainWindow):
     def __init__(self):
@@ -16,7 +16,7 @@ class Play_Cam(QMainWindow):
         self.rad_btn()
 
     def open_ie(self):
-        os.system(r'"C:\Program Files (x86)\Internet Explorer\iexplore.exe"')
+        webbrowser.open(self.input_ip.text())
 
     def rad_btn(self):
 
