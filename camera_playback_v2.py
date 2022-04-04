@@ -16,7 +16,10 @@ class Play_Cam(QMainWindow):
         self.rad_btn()
 
     def open_ie(self):
-        webbrowser.open(self.input_ip.text())
+        if self.ip_add_cum_find(self.input_ip.text()):
+            webbrowser.open(self.input_ip.text())
+        else:
+            self.infobox_ip()
 
     def rad_btn(self):
 
