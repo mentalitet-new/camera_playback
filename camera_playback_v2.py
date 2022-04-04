@@ -51,6 +51,11 @@ class Play_Cam(QMainWindow):
         state_btn_dynacolor =self.chk_enter_dynacolor.isChecked()
         ip_address_fnd = self.input_ip.text()
         param_stream_cam = self.input_stream_number.text()
+
+        while state_btn_sunell == False and state_btn_unv == False and state_btn_dynacolor == False:
+            self.infobox_set_radbtn()
+            break
+
         if state_btn_sunell:
             if self.ip_add_cum_find(ip_address_fnd) != True:
                 self.infobox_ip()
@@ -71,6 +76,9 @@ class Play_Cam(QMainWindow):
             else:
                 self.play_cam_sta_dynacolor()
 
+
+
+
     def hide_dynacolor_stream(self):
         self.lable_stream.hide()
         self.input_stream_number.hide()
@@ -88,6 +96,9 @@ class Play_Cam(QMainWindow):
 
     def infobox_ip(self):
         QMessageBox.warning(self, "Error value IP", " Enter Ip correct address")
+
+    def infobox_set_radbtn(self):
+        QMessageBox.information(self, "info", "selection model camera" )
 
     def infobox_number_stream(self):
         QMessageBox.critical(self, "info", "incorrect stream number")
@@ -136,7 +147,7 @@ class Play_Cam(QMainWindow):
     def all_btn_in_window(self):
 
         self.btn_open_ping = QPushButton("Ping", self)
-        self.btn_open_ping.move(200, 30)
+        self.btn_open_ping.move(300, 0)
         self.btn_open_ping.clicked.connect(self.ping_chk)
 
         self.btn_open_ie = QPushButton("Open IE", self)
