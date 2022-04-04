@@ -3,6 +3,7 @@ import cv2 as cv
 from PyQt5.QtWidgets import *
 import ipaddress
 import webbrowser
+import os
 
 class Play_Cam(QMainWindow):
     def __init__(self):
@@ -14,6 +15,14 @@ class Play_Cam(QMainWindow):
         self.all_lable()
         self.all_input()
         self.rad_btn()
+
+    def ping_chk(self):
+        hostname = self.input_ip.text()
+        response = os.system("ping " + hostname)
+        if response == 0:
+            self.lable_network_state_ok.setText("OK")
+        else:
+            self.lable_network_state_ok.setText("Error")
 
     def open_ie(self):
         if self.ip_add_cum_find(self.input_ip.text()):
@@ -118,7 +127,17 @@ class Play_Cam(QMainWindow):
         self.lable_stream = QLabel("enter Stream number", self)
         self.lable_stream.move(0, 175)
 
+        self.lable_network_state = QLabel("Network state: ", self)
+        self.lable_network_state.move(0, 230)
+
+        self.lable_network_state_ok = QLabel("__", self)
+        self.lable_network_state_ok.move(75, 230)
+
     def all_btn_in_window(self):
+
+        self.btn_open_ping = QPushButton("Ping", self)
+        self.btn_open_ping.move(200, 30)
+        self.btn_open_ping.clicked.connect(self.ping_chk)
 
         self.btn_open_ie = QPushButton("Open IE", self)
         self.btn_open_ie.move(200, 0)
