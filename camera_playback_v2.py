@@ -76,9 +76,6 @@ class Play_Cam(QMainWindow):
             else:
                 self.play_cam_sta_dynacolor()
 
-
-
-
     def hide_dynacolor_stream(self):
         self.lable_stream.hide()
         self.input_stream_number.hide()
@@ -108,7 +105,7 @@ class Play_Cam(QMainWindow):
         self.input_ip = QLineEdit("", self)
         self.input_ip.move(0, 80)
         self.input_ip.resize(100, 20)
-        self.input_ip.setPlaceholderText("000.000.000.000")
+        self.input_ip.setText("192.168.0.250")
 
         self.input_login = QLineEdit("", self)
         self.input_login.move(0, 120)
@@ -138,11 +135,11 @@ class Play_Cam(QMainWindow):
         self.lable_stream = QLabel("enter Stream number", self)
         self.lable_stream.move(0, 175)
 
-        self.lable_network_state = QLabel("Network state: ", self)
+        self.lable_network_state = QLabel("Network status: ", self)
         self.lable_network_state.move(0, 230)
 
         self.lable_network_state_ok = QLabel("__", self)
-        self.lable_network_state_ok.move(75, 230)
+        self.lable_network_state_ok.move(80, 230)
 
     def all_btn_in_window(self):
 
