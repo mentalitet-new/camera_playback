@@ -54,7 +54,6 @@ class Play_Cam(QMainWindow):
             else:
                 self.play_cam_sta_dynacolor()
 
-
     def hide_dynacolor_stream(self):
         self.lable_stream.hide()
         self.input_stream_number.hide()
