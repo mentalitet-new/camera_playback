@@ -76,48 +76,6 @@ class Play_Cam(QMainWindow):
     def infobox_number_stream(self):
         QMessageBox.critical(self, "info", "incorrect stream number")
 
-    def btn_choice_model_cam(self):
-        ip_address_fnd = self.input_ip.text()
-        list_the_cam = ["Sunell", "UNV", "Dynacolor"]
-        camera, btn_clk_OK = QInputDialog.getItem(self, "Cameras_title", "Enter cam", list_the_cam)
-        if camera == "Sunell" and btn_clk_OK == True:
-            self.lable_enter_cam.setText("Sunell")
-            self.show_cams_stream()
-            check_state = True
-            param_stream_cam = self.input_stream_number.text()
-            while check_state:
-                if self.ip_add_cum_find(ip_address_fnd) != True:
-                    self.infobox_ip()
-                    break
-                elif param_stream_cam == "1" or param_stream_cam == "2":
-                    self.play_cam_sta_sunell()
-                    break
-                else:
-                    self.infobox_number_stream()
-                    break
-        elif camera == "UNV" and btn_clk_OK == True:
-            self.lable_enter_cam.setText("UNV")
-            self.show_cams_stream()
-            check_state = True
-            param_stream_cam = self.input_stream_number.text()
-            while check_state:
-                if self.ip_add_cum_find(ip_address_fnd) != True:
-                    self.infobox()
-                    break
-                elif param_stream_cam == "1" or param_stream_cam == "2":
-                    self.play_cam_sta_unv()
-                    break
-                else:
-                    self.infobox_number_stream()
-                    break
-        elif camera == "Dynacolor" and btn_clk_OK == True:
-            self.lable_enter_cam.setText("Dynacolor")
-            self.hide_dynacolor_stream()
-            if self.ip_add_cum_find(ip_address_fnd) == True:
-                self.play_cam_sta_dynacolor()
-            else:
-                self.infobox()
-
     def all_input(self):
 
         self.input_ip = QLineEdit("", self)
