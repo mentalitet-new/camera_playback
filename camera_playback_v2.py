@@ -2,6 +2,7 @@ import sys
 import cv2 as cv
 from PyQt5.QtWidgets import *
 import ipaddress
+import os
 
 class Play_Cam(QMainWindow):
     def __init__(self):
@@ -13,6 +14,9 @@ class Play_Cam(QMainWindow):
         self.all_lable()
         self.all_input()
         self.rad_btn()
+
+    def open_ie(self):
+        os.system(r'"C:\Program Files (x86)\Internet Explorer\iexplore.exe"')
 
     def rad_btn(self):
 
@@ -29,6 +33,7 @@ class Play_Cam(QMainWindow):
         self.chk_enter_dynacolor.clicked.connect(self.hide_dynacolor_stream)
 
     def btn_play(self):
+
         state_btn_sunell = self.chk_enter_sunell.isChecked()
         state_btn_unv = self.chk_enter_unv.isChecked()
         state_btn_dynacolor =self.chk_enter_dynacolor.isChecked()
@@ -79,7 +84,7 @@ class Play_Cam(QMainWindow):
 
         self.input_ip = QLineEdit("", self)
         self.input_ip.move(0, 80)
-        self.input_ip.resize(140, 20)
+        self.input_ip.resize(100, 20)
         self.input_ip.setPlaceholderText("000.000.000.000")
 
         self.input_login = QLineEdit("", self)
@@ -111,6 +116,10 @@ class Play_Cam(QMainWindow):
         self.lable_stream.move(0, 175)
 
     def all_btn_in_window(self):
+
+        self.btn_open_ie = QPushButton("Open IE", self)
+        self.btn_open_ie.move(200, 0)
+        self.btn_open_ie.clicked.connect(self.open_ie)
 
         self.btn_show_cam = QPushButton("Play", self)
         self.btn_show_cam.move(0, 0)
