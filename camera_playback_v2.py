@@ -3,7 +3,6 @@ import cv2 as cv
 from PyQt5.QtWidgets import *
 import ipaddress
 import webbrowser
-import os
 
 class Play_Camera(QMainWindow):
     def __init__(self):
