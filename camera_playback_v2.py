@@ -16,14 +16,6 @@ class Play_Camera(QMainWindow):
         self.all_input()
         self.rad_btn()
 
-    def ping_chk(self):
-        hostname = self.input_ip.text()
-        response = os.system("ping " + hostname)
-        if response == 0:
-            self.lable_network_state_ok.setText("OK")
-        else:
-            self.lable_network_state_ok.setText("Error")
-
     def open_ie(self):
         if self.ip_add_cum_find(self.input_ip.text()):
             webbrowser.open(self.input_ip.text())
@@ -44,15 +36,21 @@ class Play_Camera(QMainWindow):
         self.chk_enter_dynacolor.move(250, 140)
         self.chk_enter_dynacolor.clicked.connect(self.hide_dynacolor_stream)
 
+        self.chk_enter_praxis = QRadioButton("Praxis", self)
+        self.chk_enter_praxis.move(250, 160)
+        self.chk_enter_praxis.clicked.connect(self.show_cams_stream)
+
     def btn_play(self):
 
         state_btn_sunell = self.chk_enter_sunell.isChecked()
         state_btn_unv = self.chk_enter_unv.isChecked()
-        state_btn_dynacolor =self.chk_enter_dynacolor.isChecked()
+        state_btn_dynacolor = self.chk_enter_dynacolor.isChecked()
+        state_btn_praxis = self.chk_enter_praxis.isChecked()
         ip_address_fnd = self.input_ip.text()
         param_stream_cam = self.input_stream_number.text()
 
-        while state_btn_sunell == False and state_btn_unv == False and state_btn_dynacolor == False:
+        while state_btn_sunell == False and state_btn_unv == False and state_btn_dynacolor == False \
+                and state_btn_praxis == False:
             self.infobox_set_radbtn()
             break
 
@@ -75,6 +73,13 @@ class Play_Camera(QMainWindow):
                 self.infobox_ip()
             else:
                 self.play_cam_sta_dynacolor()
+        elif state_btn_praxis:
+            if self.ip_add_cum_find(ip_address_fnd) != True:
+                self.infobox_ip()
+            elif param_stream_cam == "1" or param_stream_cam == "2":
+                self.play_cam_sta_praxis()
+            else:
+                self.infobox_number_stream()
 
     def hide_dynacolor_stream(self):
         self.lable_stream.hide()
@@ -135,17 +140,7 @@ class Play_Camera(QMainWindow):
         self.lable_stream = QLabel("enter Stream number", self)
         self.lable_stream.move(0, 175)
 
-        self.lable_network_state = QLabel("Network status: ", self)
-        self.lable_network_state.move(0, 230)
-
-        self.lable_network_state_ok = QLabel("__", self)
-        self.lable_network_state_ok.move(80, 230)
-
     def all_btn_in_window(self):
-
-        self.btn_open_ping = QPushButton("Ping", self)
-        self.btn_open_ping.move(300, 0)
-        self.btn_open_ping.clicked.connect(self.ping_chk)
 
         self.btn_open_ie = QPushButton("Open IE", self)
         self.btn_open_ie.move(200, 0)
@@ -167,10 +162,10 @@ class Play_Camera(QMainWindow):
         elif res == QMessageBox.No:
             QMessageBox.information(self, " info", " Continue")
 
-    def play_cam_sta_unv(self):
+    def play_cam_sta_praxis(self):
         self.ret_key_q = 0
         cap = cv.VideoCapture(f"rtsp://{self.input_login.text()}:{self.input_pass.text()}@{self.input_ip.text()}"
-                              f"/media/video{self.input_stream_number.text()}/video")
+                              f":554/0({self.input_stream_number.text()})")
         while cap.isOpened():
             ret, frame = cap.read()
             # if frame is read correctly ret is True
@@ -189,6 +184,25 @@ class Play_Camera(QMainWindow):
         self.ret_key_q = 0
         cap = cv.VideoCapture(f"rtsp://{self.input_login.text()}:{self.input_pass.text()}@{self.input_ip.text()}"
                               f"/snl/live/1/{self.input_stream_number.text()}/cx/sido=-A0my1A==")
+        while cap.isOpened():
+            ret, frame = cap.read()
+            # if frame is read correctly ret is True
+            if not ret:
+                QMessageBox.information(self, "info", "incorrect param")
+                break
+            rgb_color = cv.cvtColor(frame, cv.COLOR_RGBA2RGB)
+            cv.imshow('frame', rgb_color)
+            if cv.waitKey(1) == ord("q") or self.ret_key_q == 113:
+                break
+
+        cap.release()
+        cv.destroyAllWindows()
+
+    def play_cam_sta_unv(self):
+        self.ret_key_q = 0
+        cap = cv.VideoCapture(f"rtsp://{self.input_login.text()}:{self.input_pass.text()}@{self.input_ip.text()}"
+                              f"/media/video{self.input_stream_number.text()}/video")
+        print(cap)
         while cap.isOpened():
             ret, frame = cap.read()
             # if frame is read correctly ret is True
