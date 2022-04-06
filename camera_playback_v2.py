@@ -6,6 +6,7 @@ import ipaddress
 import webbrowser
 
 class Play_Camera(QMainWindow):
+
     def __init__(self):
         super().__init__()
         self.resize(300, 250)
