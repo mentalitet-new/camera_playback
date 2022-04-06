@@ -1,13 +1,14 @@
 import sys
 import cv2 as cv
 from PyQt5.QtWidgets import *
+from PyQt5.QtGui import *
 import ipaddress
 import webbrowser
 
 class Play_Camera(QMainWindow):
     def __init__(self):
         super().__init__()
-        self.resize(400, 400)
+        self.resize(300, 250)
         self.setWindowTitle("play_rtsp_cam")
 
         self.all_btn_in_window()
@@ -24,19 +25,19 @@ class Play_Camera(QMainWindow):
     def rad_btn(self):
 
         self.chk_enter_sunell = QRadioButton("Sunell", self)
-        self.chk_enter_sunell.move(250, 100)
+        self.chk_enter_sunell.move(130, 75)
         self.chk_enter_sunell.clicked.connect(self.show_cams_stream)
 
         self.chk_enter_unv = QRadioButton("UNV", self)
-        self.chk_enter_unv.move(250, 120)
+        self.chk_enter_unv.move(130, 95)
         self.chk_enter_unv.clicked.connect(self.show_cams_stream)
 
         self.chk_enter_dynacolor = QRadioButton("Dynacolor", self)
-        self.chk_enter_dynacolor.move(250, 140)
+        self.chk_enter_dynacolor.move(130, 115)
         self.chk_enter_dynacolor.clicked.connect(self.hide_dynacolor_stream)
 
         self.chk_enter_praxis = QRadioButton("Praxis", self)
-        self.chk_enter_praxis.move(250, 160)
+        self.chk_enter_praxis.move(130, 135)
         self.chk_enter_praxis.clicked.connect(self.show_cams_stream)
 
     def btn_play(self):
@@ -168,12 +169,18 @@ class Play_Camera(QMainWindow):
         while cap.isOpened():
             ret, frame = cap.read()
             # if frame is read correctly ret is True
+            if ret:
+                self.icon1 = QIcon()
+                self.icon2 = QIcon()
+                self.icon1.addPixmap(QPixmap("large-green-circle-3052.png"), QIcon.Normal, QIcon.Off)
+                self.chk_enter_praxis.setIcon(self.icon1)
             if not ret:
                 QMessageBox.information(self, "info", "incorrect param")
                 break
             rgb_color = cv.cvtColor(frame, cv.COLOR_RGBA2RGB)
             cv.imshow('frame', rgb_color)
             if cv.waitKey(1) == ord("q") or self.ret_key_q == 113:
+                self.chk_enter_praxis.setIcon(self.icon2)
                 break
 
         cap.release()
@@ -186,12 +193,18 @@ class Play_Camera(QMainWindow):
         while cap.isOpened():
             ret, frame = cap.read()
             # if frame is read correctly ret is True
+            if ret:
+                self.icon1 = QIcon()
+                self.icon2 = QIcon()
+                self.icon1.addPixmap(QPixmap("large-green-circle-3052.png"), QIcon.Normal, QIcon.Off)
+                self.chk_enter_sunell.setIcon(self.icon1)
             if not ret:
                 QMessageBox.information(self, "info", "incorrect param")
                 break
             rgb_color = cv.cvtColor(frame, cv.COLOR_RGBA2RGB)
             cv.imshow('frame', rgb_color)
             if cv.waitKey(1) == ord("q") or self.ret_key_q == 113:
+                self.chk_enter_sunell.setIcon(self.icon2)
                 break
 
         cap.release()
@@ -204,12 +217,18 @@ class Play_Camera(QMainWindow):
         while cap.isOpened():
             ret, frame = cap.read()
             # if frame is read correctly ret is True
+            if ret:
+                self.icon1 = QIcon()
+                self.icon2 = QIcon()
+                self.icon1.addPixmap(QPixmap("large-green-circle-3052.png"), QIcon.Normal, QIcon.Off)
+                self.chk_enter_unv.setIcon(self.icon1)
             if not ret:
                 QMessageBox.information(self, "info", "incorrect param")
                 break
             rgb_color = cv.cvtColor(frame, cv.COLOR_RGBA2RGB)
             cv.imshow('frame', rgb_color)
             if cv.waitKey(1) == ord("q") or self.ret_key_q == 113:
+                self.chk_enter_unv.setIcon(self.icon2)
                 break
 
         cap.release()
@@ -222,12 +241,18 @@ class Play_Camera(QMainWindow):
         while cap.isOpened():
             ret, frame = cap.read()
             # if frame is read correctly ret is True
+            if ret:
+                self.icon1 = QIcon()
+                self.icon2 = QIcon()
+                self.icon1.addPixmap(QPixmap("large-green-circle-3052.png"), QIcon.Normal, QIcon.Off)
+                self.chk_enter_dynacolor.setIcon(self.icon1)
             if not ret:
                 QMessageBox.information(self, "info", "incorrect param")
                 break
             rgb_color = cv.cvtColor(frame, cv.COLOR_RGBA2RGB)
             cv.imshow('frame', rgb_color)
             if cv.waitKey(1) == ord("q") or self.ret_key_q == 113:
+                self.chk_enter_dynacolor.setIcon(self.icon2)
                 break
 
         cap.release()
