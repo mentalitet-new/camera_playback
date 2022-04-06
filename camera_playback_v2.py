@@ -202,7 +202,6 @@ class Play_Camera(QMainWindow):
         self.ret_key_q = 0
         cap = cv.VideoCapture(f"rtsp://{self.input_login.text()}:{self.input_pass.text()}@{self.input_ip.text()}"
                               f"/media/video{self.input_stream_number.text()}/video")
-        print(cap)
         while cap.isOpened():
             ret, frame = cap.read()
             # if frame is read correctly ret is True
